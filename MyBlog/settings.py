@@ -34,7 +34,8 @@ SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-local-debug-key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dead-air-archives.onrender.com',
+    'www.dead-air-archives.onrender.com',]
 
 
 # Application definition

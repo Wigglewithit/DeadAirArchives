@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: dead-air-archives
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn MyBlog.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: MyBlog.settings
+      - key: SECRET_KEY
+        value: +l+4-dot2zq29+4^nxv2ngy@-y17ds$ytpc4*6!d3x7!orbs77
+      - key: EMAIL_HOST_USER
+        value: deadairarchives0@gmail.com
+      - key: EMAIL_HOST_PASSWORD
+        value: fsksfnreyivmqbun
+      - key: DEBUG
+        value: False

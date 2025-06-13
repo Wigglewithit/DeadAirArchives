@@ -1,0 +1,36 @@
+{% extends "blog/base.html" %}
+{% block title %}Home | Dead Air Archives{% endblock %}
+{% block content %}
+
+<!-- Intro section -->
+<div class="site-intro box">
+    <h1>Dead Air Archives</h1>
+    <p><strong>A blog, a place to share my interest.</strong><br>
+    Maybe, hopefully, I will turn you towards conspiracies you never knew existed.</p>
+</div>
+
+<!-- Blog posts -->
+{% for post in posts %}
+    <div class="post-card box">
+        <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
+        <p>{{ post.content|truncatewords:40 }}...</p>
+        <small>Posted on {{ post.created_at|date:"F j, Y" }}</small>
+    </div>
+{% empty %}
+    <p>No blog posts yet.</p>
+{% endfor %}
+
+<!-- Email Subscribe -->
+<div class="cta box">
+    <h3>Stay Connected</h3>
+    <p>Get notified when I drop new posts about dev work, tools, and deeper perspectives.</p>
+    <form action="https://buttondown.email/api/emails/embed-subscribe/deadairarchives"
+          method="post"
+          target="popupwindow"
+          onsubmit="window.open('https://buttondown.email/deadairarchives', 'popupwindow')">
+        <input type="email" name="email" placeholder="Your email" required>
+        <button type="submit">Subscribe</button>
+    </form>
+</div>
+
+{% endblock %}

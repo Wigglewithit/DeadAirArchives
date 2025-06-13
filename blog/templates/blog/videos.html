@@ -1,0 +1,44 @@
+{% extends "blog/base.html" %}
+{% block title %}Videos | Dead Air Archives{% endblock %}
+
+{% block content %}
+<div class="box">
+  <h1>Videos</h1>
+  <p>This page features a rotating selection of videos that align with what I’m learning, questioning, or building — updated weekly.</p>
+</div>
+
+{% if videos.tech %}
+  <div class="box">
+    <h2>🔧 Tech of the Week</h2>
+    <div class="video-wrapper">
+      <iframe src="{{ videos.tech.youtube_url }}" allowfullscreen></iframe>
+    </div>
+  </div>
+{% endif %}
+
+{% if videos.conspiracy %}
+  <div class="box">
+    <h2>🕵️‍♂️ Conspiracy Spotlight</h2>
+    <div class="video-wrapper">
+      <iframe src="{{ videos.conspiracy.youtube_url }}" allowfullscreen></iframe>
+    </div>
+  </div>
+{% endif %}
+
+{% if videos.personal %}
+  <div class="box">
+    <h2>🎥 Personal Projects</h2>
+    <div class="video-wrapper">
+      <iframe src="{{ videos.personal.youtube_url }}" allowfullscreen></iframe>
+    </div>
+  </div>
+{% else %}
+  <div class="box">
+    <h2>🎥 Personal Projects</h2>
+    <p>Coming soon — once I start putting content together, you'll find it here.</p>
+  </div>
+{% endif %}
+{% endblock %}
+
+
+

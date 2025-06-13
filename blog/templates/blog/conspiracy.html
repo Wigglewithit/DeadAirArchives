@@ -1,0 +1,32 @@
+{% extends "blog/base.html" %}
+{% block title %}Conspiracy Vault | Dead Air Archives{% endblock %}
+
+{% block content %}
+<div class="box">
+  <h1>🧠 Conspiracy Vault</h1>
+  <p>This is where I post findings and files on topics mainstream media avoids — from hidden tech to surveillance operations.</p>
+</div>
+
+{% for group in grouped_links %}
+  <div class="box">
+    <h2>{{ group.label }}</h2>
+
+    {% if group.links %}
+      <ul>
+        {% for link in group.links %}
+          <li style="margin-bottom: 15px;">
+            <strong>{{ link.title }}</strong><br>
+            <small>{{ link.description }}</small><br>
+            <a href="{{ link.url }}" target="_blank">🔗 Visit Source</a>
+            {% if link.download %}
+              | <a href="{{ link.download.url }}" download>📥 Download</a>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p><em>No entries yet.</em></p>
+    {% endif %}
+  </div>
+{% endfor %}
+{% endblock %}

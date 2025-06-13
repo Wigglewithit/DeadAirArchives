@@ -8,10 +8,10 @@ services:
       - key: DJANGO_SETTINGS_MODULE
         value: MyBlog.settings
       - key: SECRET_KEY
-        value: +l+4-dot2zq29+4^nxv2ngy@-y17ds$ytpc4*6!d3x7!orbs77
+        sync: false
       - key: EMAIL_HOST_USER
-        value: deadairarchives0@gmail.com
+        sync: false
       - key: EMAIL_HOST_PASSWORD
-        value: fsksfnreyivmqbun
+        sync: false
       - key: DEBUG
         value: False

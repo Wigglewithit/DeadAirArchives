@@ -2,14 +2,22 @@ services:
   - type: web
     name: dead-air-archives
     env: python
-    buildCommand: |
-      pip install -r requirements.txt
-      python manage.py makemigrations --noinput
-      python manage.py migrate --noinput --verbosity 2
-      python manage.py collectstatic --noinput
-      
+    services:
+      - type: web
 
-    startCommand: gunicorn MyBlog.wsgi:application
+        buildCommand: |
+          pip install -r requirements.txt
+          python manage.py collectstatic --no-input
+        preDeploy:
+          - python manage.py makemigrations
+          - python manage.py migrate
+        startCommand: gunicorn MyBlog.wsgi:application
+
+        databases:
+        - type: postgres
+          name: dead-air-db
+          plan: free
+
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: MyBlog.settings

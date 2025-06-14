@@ -10,40 +10,39 @@ ENV/
 env/
 *.env
 
-# Django stuff:
+# Django-specific
 *.log
 *.pot
 *.pyc
 *.pyo
-*.sqlite3
 db.sqlite3
 local_settings.py
+test*.sqlite3
+
+
+# Migrations — DO NOT ignore these!
+# (let Git track migrations)
+# blog/migrations/ should be included
 
 # Media files (user uploads)
 media/
 
-# Static file collections (collected via collectstatic)
+# Static file collections
 staticfiles/
 static/
 
-# VS Code settings
+# IDEs
 .vscode/
-
-# JetBrains IDEs
 .idea/
 
-# Mac and system files
+# macOS / Windows junk files
 .DS_Store
 Thumbs.db
 
-# Environment variables
+# Python environment vars
 .env
 
-# Migrations
-**/migrations/*.py
-**/migrations/*.pyc
-
-# Coverage and testing
+# Test and coverage
 htmlcov/
 coverage.xml
 *.cover
@@ -56,9 +55,8 @@ nosetests.xml
 test-results/
 junit.xml
 
-# MyPy, Pyright, Pylint, etc.
+# Type checking
 .mypy_cache/
 .dmypy.json
 .pyre/
 .pytype/
-

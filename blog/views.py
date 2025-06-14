@@ -14,7 +14,7 @@ def videos_view(request):
         'personal': Video.objects.filter(category='personal', is_active=True).order_by('-created_at').first(),
     }
     return render(request, 'blog/videos.html', {'videos': videos})
-def about(request)
+def about(request):
     return render(request, 'blog/about.html')
 
 def videos(request):

@@ -16,6 +16,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import dj_database_url
 
 # Load the .env file
 load_dotenv()
@@ -97,23 +98,24 @@ WSGI_APPLICATION = 'MyBlog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-import dj_database_url
 
-# Use SQLite for local development, PostgreSQL for production
-if os.environ.get('RENDER', '') == 'true':
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=os.environ.get('DATABASE_URL', ''),
-            conn_max_age=600
-        )
+
+# Default: SQLite for local dev
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
+
+# If Render set the DATABASE_URL, switch to Postgres
+# (we also check RENDER=true so it won’t fire if DATABASE_URL accidentally exists locally)
+if os.getenv('RENDER', '') == 'true' and os.getenv('DATABASE_URL'):
+    DATABASES['default'] = dj_database_url.config(
+        default=os.environ['DATABASE_URL'],
+        conn_max_age=600,
+        ssl_require=True,     # use SSL on Render’s Postgres
+    )
 
 
 # Password validation

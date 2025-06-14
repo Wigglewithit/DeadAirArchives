@@ -111,12 +111,11 @@ DATABASES = {
 # If Render set the DATABASE_URL, switch to Postgres
 # (we also check RENDER=true so it won’t fire if DATABASE_URL accidentally exists locally)
 if os.getenv('RENDER', '') == 'true' and os.getenv('DATABASE_URL'):
-    DATABASES['default'] = dj_database_url.config(
-        default=os.environ['DATABASE_URL'],
-        conn_max_age=600,
-        ssl_require=True,     # use SSL on Render’s Postgres
-    )
+    import dj_database_url
 
+    DATABASES = {
+        'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

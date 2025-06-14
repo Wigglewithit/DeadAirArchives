@@ -3,6 +3,8 @@ from .forms import CommentForm
 from django.core.mail import mail_admins
 from django.contrib import messages
 from .models import Post, Comment, Video, VaultLink
+from django.db import connection
+print(connection.introspection.table_names())
 
 
 def videos_view(request):
@@ -12,7 +14,7 @@ def videos_view(request):
         'personal': Video.objects.filter(category='personal', is_active=True).order_by('-created_at').first(),
     }
     return render(request, 'blog/videos.html', {'videos': videos})
-def about(request):
+def about(request)
     return render(request, 'blog/about.html')
 
 def videos(request):

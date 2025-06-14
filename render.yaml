@@ -3,11 +3,12 @@ services:
     name: dead-air-archives
     env: python
     buildCommand: |
-       pip install -r requirements.txt
-       python manage.py collectstatic --noinput
-       python manage.py showmigrations
-       python manage.py makemigrations --verbosity 2
-       python manage.py migrate --verbosity 2
+      pip install -r requirements.txt
+      python manage.py makemigrations --noinput
+      python manage.py migrate --noinput --verbosity 2
+      python manage.py collectstatic --noinput
+      
+
     startCommand: gunicorn MyBlog.wsgi:application
     envVars:
       - key: DJANGO_SETTINGS_MODULE

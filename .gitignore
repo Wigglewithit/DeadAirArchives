@@ -1,4 +1,4 @@
-# Byte-compiled / optimized / DLL files
+# Python bytecode and cache
 __pycache__/
 *.py[cod]
 *$py.class
@@ -8,45 +8,39 @@ __pycache__/
 venv/
 ENV/
 env/
+
+# Django settings & secrets
 *.env
-
-# Django-specific
-*.log
-*.pot
-*.pyc
-*.pyo
-db.sqlite3
 local_settings.py
-test*.sqlite3
-
-
-# Migrations — DO NOT ignore these!
-# (let Git track migrations)
-# blog/migrations/ should be included
-
-# Media files (user uploads)
-media/
-
-# Static file collections
-staticfiles/
-static/
-
-# IDEs
-.vscode/
-.idea/
-
-# macOS / Windows junk files
-.DS_Store
-Thumbs.db
-
-# Python environment vars
 .env
 
-# Test and coverage
+# Logs
+*.log
+
+# Django databases
+db.sqlite3
+test*.sqlite3
+
+# Translations
+*.pot
+
+# Media uploads (user content)
+media/
+
+# Collected static files (output from collectstatic)
+staticfiles/
+static_root/
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+
+# Coverage & testing
 htmlcov/
 coverage.xml
 *.cover
-*.py,cover
 .tox/
 .nox/
 .pytest_cache/
@@ -55,8 +49,16 @@ nosetests.xml
 test-results/
 junit.xml
 
-# Type checking
-.mypy_cache/
-.dmypy.json
-.pyre/
-.pytype/
+# IDE/editor settings
+.vscode/
+.idea/
+
+# macOS & Windows system files
+.DS_Store
+Thumbs.db
+
+# Render deploy config (keep this tracked!)
+!render.yaml
+
+# Migration files — DO NOT ignore migrations
+# (track all migrations in your apps)

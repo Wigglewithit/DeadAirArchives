@@ -1,294 +1,139 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{% block title %}Dead Air Archives{% endblock %}</title>
     <meta charset="UTF-8">
+    <title>{% block title %}Dead Air Archives{% endblock %}</title>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Source+Serif+4:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-
-    <!-- Dark mode preference -->
-    <script>
-        if (localStorage.getItem("theme") === "dark") {
-            document.documentElement.classList.add("dark-mode");
-        }
-    </script>
+    <!-- Google Fonts + Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- Styles -->
+    <!--  Dark-mode preference  -->
+    <script>
+      if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.classList.add("dark-mode");
+      }
+    </script>
+
     <style>
-
+        /* ─────────── root palette ─────────── */
         :root {
-            --bg: #fafafa;
-            --text: #222;
-            --card: white;
+            --bg: #000;                /* black background                         */
+            --text: #00ff9c;           /* hacker-green text                        */
+            --card: #0a0a0a;           /* dark cards                               */
+            --accent: #00e1ff;         /* neon-cyan accent                         */
         }
-
         .dark-mode {
-            --bg: #1e1e1e;
-            --text: #eaeaea;
-            --card: #2a2a2a;
-        iframe {
-             border-radius: 16px;
-             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-             border: 1px solid rgba(255, 255, 255, 0.1);
+            --bg: #fafafa;             /* invert colours for “light / dark” toggle */
+            --text: #222;
+            --card: #ffffff;
         }
 
-
+        /* ─────────── base resets ─────────── */
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{
+            font-family:'Fira Code',monospace;
+            background:var(--bg);
+            color:var(--text);
+            line-height:1.7;
+            font-size:17px;
+            padding:40px 20px;
+            scroll-behavior:smooth;
         }
 
-        body {
-            font-family: 'Source Serif 4', serif;
-            margin: 0;
-            padding: 40px 20px;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-            font-size: 17px;
+        /* ─────────── headings w/ neon-glitch ─────────── */
+        h1,h2,h3{
+            font-family:'Inter',sans-serif;
+            font-weight:600;
+            margin:.8em 0 .4em;
+            position:relative;
+            color:var(--text);
+            text-shadow:0 0 6px var(--accent),0 0 12px var(--accent);
+        }
+        /* subtle “glitch” slice */
+        h1::after,h2::after,h3::after{
+            content:attr(data-text);
+            position:absolute;
+            left:2px;
+            top:2px;
+            color:var(--accent);
+            opacity:.5;
+            clip-path:inset(40% 0 0 0);
         }
 
-        h1, h2, h3 {
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            color: var(--text);
-            line-height: 1.2;
-            margin-top: 1.5em;
-            margin-bottom: 0.5em;
+        /* ─────────── cards / containers ─────────── */
+        .box,.nav-container,.site-intro,.post-card{
+            background:var(--card);
+            border:1px solid rgba(255,255,255,.06);
+            border-radius:16px;
+            box-shadow:0 4px 14px rgba(0,0,0,.45);
+        }
+        .box,.site-intro,.post-card{padding:30px;max-width:800px;margin:0 auto 40px}
+
+        /* ─────────── nav bar ─────────── */
+        .nav-container{
+            max-width:900px;
+            margin:0 auto 30px;
+            position:sticky;top:0;z-index:1000;
+        }
+        nav{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;padding:18px 22px}
+        .nav-link{
+            color:var(--text);
+            font-weight:600;
+            text-decoration:none;
+            padding:8px 12px;
+            border-radius:8px;
+            transition:background .2s;
+        }
+        .nav-link:hover{background:rgba(0,225,255,.15)}
+
+        /* ─────────── theme toggle ─────────── */
+        .theme-toggle{
+            position:fixed;right:20px;top:20px;
+            background:var(--accent);color:#000;
+            border:none;border-radius:8px;padding:8px 14px;
+            cursor:pointer;font-weight:600;z-index:1100;
         }
 
-        h1 { font-size: 2rem; }
-        h2 { font-size: 1.6rem; }
-        h3 { font-size: 1.3rem; }
+        /* ─────────── hero image wrapper ─────────── */
+        .hero-wrapper{display:flex;justify-content:center;margin:48px 0}
+        .hero-wrapper img{width:100%;max-width:600px;border-radius:12px}
 
-        p {
-            margin-bottom: 1.5em;
-        }
-
-        strong {
-            font-weight: 600;
-        }
-
-        blockquote {
-            border-left: 4px solid #ccc;
-            padding-left: 12px;
-            font-style: italic;
-            color: #555;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: var(--card);
-            padding: 30px;
-            border-radius: 20px;  /* increased from 12px */
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);  /* more depth */
-            border: 1px solid rgba(255, 255, 255, 0.1);  /* subtle frame */
-        }
-
-
-
-        a {
-            color: #0077cc;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .theme-toggle {
-            float: right;
-            margin-top: -30px;
-            margin-bottom: 20px;
-            padding: 8px 12px;
-            background-color: #0077cc;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .theme-toggle:hover {
-            background-color: #005fa3;
-        }
-
-        .cta {
-            margin-top: 40px;
-            padding: 24px;
-            border-radius: 12px;
-            background: var(--card);
-            color: var(--text);
-            border: 1px solid #ddd;
-            text-align: center;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .cta form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .cta input[type="email"] {
-            padding: 10px;
-            width: 80%;
-            max-width: 300px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-
-        .cta button {
-            padding: 10px 20px;
-            background-color: #0077cc;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .cta button:hover {
-            background-color: #005fa3;
-        }
-
-        hr {
-            border: none;
-            height: 1px;
-            background: #ddd;
-            margin: 40px 0;
-        }
-        .nav-link {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 600;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: background 0.2s ease;
-        }
-
-        .nav-link:hover {
-            background-color: rgba(0, 119, 204, 0.15);
-            text-decoration: none;
-        }
-        .nav-container {
-            max-width: 800px;
-            margin: 0 auto;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            background-color: var(--card);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 30px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        nav {
-            padding: 15px 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .nav-link {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 600;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: background 0.2s ease;
-        }
-
-        .nav-link:hover {
-            background-color: rgba(0, 119, 204, 0.15);
-        }
-        .site-intro {
-            background-color: var(--card);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .post-card {
-            background-color: var(--card);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 24px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-        .box {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: var(--card);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 40px;
-        }
-
-        .video-wrapper {
-            width: 400px;
-            height: 400px;
-            max-width: 100%;
-            margin: 0 auto 30px auto;
-            position: relative;
-            overflow: hidden;
-            border-radius: 32px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 32px;
-        }
-
-
-
-
-
-
-
-
+        /* ─────────── CTA + form ─────────── */
+        .cta form{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:18px}
+        .cta input{padding:10px;width:80%;max-width:320px;border-radius:6px;border:1px solid #444;background:#111;color:var(--text)}
+        .cta button{padding:10px 22px;background:var(--accent);color:#000;border:none;border-radius:6px;cursor:pointer}
+        .cta button:hover{filter:brightness(1.15)}
     </style>
 </head>
+
 <body>
     <button class="theme-toggle" onclick="
         document.documentElement.classList.toggle('dark-mode');
         localStorage.setItem('theme',
             document.documentElement.classList.contains('dark-mode') ? 'dark' : 'light');
-    ">
-        Toggle Theme
-    </button>
-   <div class="nav-container">
-    <nav>
-        <a href="/" class="nav-link">Home</a>
-        <a href="{% url 'about' %}" class="nav-link">Who I Am</a>
-        <a href="{% url 'videos' %}" class="nav-link">Videos</a>
-        <a href="{% url 'conspiracy' %}" class="nav-link">Conspiracy</a>
-        <a href="{% url 'tech' %}" class="nav-link">Tech</a>
-        <a href="{% url 'portfolio' %}" class="nav-link">Portfolio</a>
-        <a href="{% url 'contact' %}" class="nav-link">Contact</a>
-    </nav>
-</div>
+    ">Toggle Theme</button>
 
+    <!-- ─────────── NAV ─────────── -->
+    <div class="nav-container">
+        <nav>
+            <a href="/"               class="nav-link">Home</a>
+            <a href="{% url 'about' %}"       class="nav-link">Who I Am</a>
+            <a href="{% url 'videos' %}"      class="nav-link">Videos</a>
+            <a href="{% url 'conspiracy' %}"  class="nav-link">Conspiracy</a>
+            <a href="{% url 'tech' %}"        class="nav-link">Tech</a>
+            <a href="{% url 'portfolio' %}"   class="nav-link">Portfolio</a>
+            <a href="{% url 'contact' %}"     class="nav-link">Contact</a>
+        </nav>
+    </div>
 
+    <!-- ─────────── HERO SECTION (logo) ─────────── -->
+    <section class="hero-wrapper">
+        <img src="{% static 'images/dead_air_archives_hero.png' %}"
+             alt="Dead Air Archives hero logo">
+    </section>
 
-
-
-   {% block content %}
-   {% endblock %}
-
+    {% block content %}{% endblock %}
 </body>
 </html>

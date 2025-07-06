@@ -1,13 +1,10 @@
 {% extends "blog/base.html" %}
 {% block title %}Home | Dead Air Archives{% endblock %}
 {% block content %}
-
+{% load static %}
 <!-- Intro section -->
-<div class="site-intro box">
-    <h1>Dead Air Archives</h1>
-    <p><strong>A blog, a place to share my interest.</strong><br>
-    Maybe, hopefully, I will turn you towards conspiracies you never knew existed.</p>
-</div>
+
+
 
 <!-- Blog posts -->
 {% for post in posts %}

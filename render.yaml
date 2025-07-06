@@ -3,7 +3,7 @@ services:
     name: dead-air-archives
     env: python
     buildCommand: ./build.sh
-    startCommand: gunicorn DeadAirArchives.wsgi:application
+    startCommand: python manage.py migrate && gunicorn DeadAirArchives.wsgi:application
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: DeadAirArchives.settings  # ✅ should match your actual Django settings module
